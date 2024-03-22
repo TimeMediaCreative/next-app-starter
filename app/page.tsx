@@ -1,8 +1,11 @@
+import { SanityDocument } from "next-sanity";
 
-export default function Home() {
-  return (
-    <main className="flex items-center justify-center min-h-screen">
-      Populate
-    </main>
-  );
+import Posts from "@/components/Posts";
+import { loadQuery } from "@/sanity/lib/store";
+import { POSTS_QUERY } from "@/sanity/lib/queries";
+
+export default async function Page() {
+  const initial = await loadQuery<SanityDocument[]>(POSTS_QUERY);
+
+  return <Posts posts={initial.data} />
 }
