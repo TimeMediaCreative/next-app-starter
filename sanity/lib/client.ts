@@ -7,4 +7,10 @@ export const client = createClient({
   dataset,
   projectId,
   useCdn,
+  // Following settings overridden in draft mode
+  perspective: "published",
+  stega: {
+    enabled: false,
+    studioUrl: "/studio",
+  },
 })
