@@ -1,6 +1,4 @@
-import { draftMode } from "next/headers";
 import type { Metadata } from "next";
-import LiveVisualEditing from "@/components/LiveVisualEditing";
 import "@/public/globals.css";
 
 export const metadata: Metadata = {
@@ -52,7 +50,6 @@ export default function RootLayout({
     <html lang="en">
       <body>
         {children}
-        {draftMode().isEnabled && <LiveVisualEditing />}
       </body>
     </html>
   );
