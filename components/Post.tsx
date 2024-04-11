@@ -5,6 +5,14 @@ import { SanityDocument } from "next-sanity";
 
 import { dataset, projectId } from "@/sanity/env";
 
+type PostProps = {
+  data?: {
+    title?: any,
+    mainImage?: any, 
+    body?: any
+  }
+}
+
 const builder = imageUrlBuilder({ projectId, dataset });
 
 export default function Post({ post }: { post: SanityDocument }) {

@@ -6,6 +6,7 @@ import { POSTS_QUERY, POST_QUERY } from "@/sanity/lib/queries";
 import Post from "@/components/Post";
 import PostPreview from "@/components/PostPreview";
 import { client } from "@/sanity/lib/client";
+import { LiveQueryWrapper } from "@/components/LiveQueryWrapper";
 
 export async function generateStaticParams() {
   const posts = await client.fetch<SanityDocument[]>(POSTS_QUERY)
@@ -16,11 +17,26 @@ export async function generateStaticParams() {
 }
 
 export default async function Page({params} : {params: QueryParams}) {
+  const { isEnabled } = draftMode()
   const initial = await loadQuery<SanityDocument>(POST_QUERY, params, {
     // Because of Next.js, RSC and Dynamic Routes this currently
     // cannot be set on the loadQuery function at the "top level"
-    perspective: draftMode().isEnabled ? "previewDrafts" : "published",
+    perspective: isEnabled ? "previewDrafts" : "published",
   });
+
+  console.log("Initial data:",initial.data);
+  
+
+  // return (
+  //   <LiveQueryWrapper
+  //     isEnabled={isEnabled}
+  //     query={isEnabled ? POSTS_QUERY: ''}
+  //     params={isEnabled ? params : {}}
+  //     initial={initial}
+  //   >
+  //   <Post/>
+  //   </LiveQueryWrapper>
+  // )
 
   return draftMode().isEnabled ? (
     <PostPreview initial={initial} params={params} />
