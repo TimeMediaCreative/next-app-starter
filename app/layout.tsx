@@ -1,5 +1,7 @@
+import { draftMode } from "next/headers";
 import type { Metadata } from "next";
-import "@/public/globals.css"
+import LiveVisualEditing from "@/components/LiveVisualEditing";
+import "@/public/globals.css";
 
 export const metadata: Metadata = {
   metadataBase: new URL(process.env.SITE_URL || "https://UPDATE.ME"),
@@ -7,13 +9,10 @@ export const metadata: Metadata = {
     default: "Update Me",
     template: "%s | Update Me",
   },
-  description:
-    "Lorem ipsum",
+  description: "Lorem ipsum",
   creator: "Update Me Creative",
   publisher: "Update Me Creative",
-  authors: [
-    { name: "Your Name", url: "https://www.yoursite.com" },
-  ],
+  authors: [{ name: "Your Name", url: "https://www.yoursite.com" }],
   // icons: {
   //   apple: "/apple-touch-icon.png",
   //   icon: "/android-chrome-384x384.png",
@@ -51,7 +50,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body>{children}</body>
+      <body>
+        {children}
+        {draftMode().isEnabled && <LiveVisualEditing />}
+      </body>
     </html>
   );
 }
